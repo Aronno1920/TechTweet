@@ -1,0 +1,6 @@
+@TechTweetAPI_HostAddress = http://localhost:5187
+
+GET {{TechTweetAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
