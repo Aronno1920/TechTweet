@@ -1,17 +1,23 @@
 using Microsoft.EntityFrameworkCore;
 using TechTweetAPI.Data;
+using TechTweetAPI.Repositories.Implementations;
+using TechTweetAPI.Repositories.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
 /*--------SETUP SERVICES--------*/
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
+builder.Services.AddAutoMapper(typeof(Program));
 
 /*--------SETUP DEPENDENCY--------*/
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+
 
 /*--------BUILD SERVICES--------*/
 var app = builder.Build();

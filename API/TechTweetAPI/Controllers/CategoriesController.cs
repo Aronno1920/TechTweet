@@ -1,48 +1,37 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TechTweetAPI.Data;
 using TechTweetAPI.Models.Domain;
 using TechTweetAPI.Models.DTO.Category;
+using TechTweetAPI.Repositories.Interfaces;
 
 namespace TechTweetAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class CategoriesController : ControllerBase
     {
-        private readonly ApplicationDbContext _dbContext;
-
-        public CategoriesController(ApplicationDbContext dbContext)
+        private readonly IMapper _mapper;
+        private readonly ICategoryRepository _categoryRepository;
+        public CategoriesController(ICategoryRepository categoryRepository, IMapper mapper)
         {
-            _dbContext = dbContext;
+            _categoryRepository = categoryRepository;
+            _mapper = mapper;
         }
 
 
         [HttpPost]
-        public async Task<IActionResult> CreateCategory(CreateCategoryDto category)
+        [ActionName("Create")]
+        public async Task<IActionResult> CreateCategory(CreateCategoryDto createDto)
         {
-            var _category = new Category
-            {
-                Name = category.Name,
-                UrlHandle = category.UrlHandle,
-                IsActive = true,
-                CreatedBy = "System",
-                CreatedDate = DateTime.UtcNow,
-            };
+            var _category = _mapper.Map<Category>(createDto);
 
-            await _dbContext.Categories.AddAsync(_category);
-            await _dbContext.SaveChangesAsync();
+            var saveCategory = await _categoryRepository.CreateAsync(_category);
 
-            var newCategory = new CategoryDto
-            {
-                Id = _category.Id,
-                Name = _category.Name,
-                UrlHandle = _category.UrlHandle,
-                IsActive = _category.IsActive,
-            };
+            var newCategory = _mapper.Map<CategoryDto>(saveCategory);
 
             return Ok(newCategory);
         }
-
     }
 }
