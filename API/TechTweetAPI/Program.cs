@@ -1,8 +1,17 @@
+using Microsoft.EntityFrameworkCore;
+using TechTweetAPI.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 /*--------SETUP SERVICES--------*/
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
+
+/*--------SETUP DEPENDENCY--------*/
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+});
 
 /*--------BUILD SERVICES--------*/
 var app = builder.Build();
