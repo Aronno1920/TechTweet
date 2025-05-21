@@ -1,12 +1,11 @@
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
+/*--------SETUP SERVICES--------*/
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 
+/*--------BUILD SERVICES--------*/
 var app = builder.Build();
-
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
@@ -16,6 +15,7 @@ if (app.Environment.IsDevelopment())
     });
 }
 
+/*--------RUN APPLICATION--------*/
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
