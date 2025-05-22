@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms'
+import { CategoryAddRequest } from '../models/category-add-request.model';
 
 @Component({
   selector: 'app-category-add',
@@ -13,4 +14,16 @@ import { FormsModule } from '@angular/forms'
 
 export class CategoryAddComponent {
 
+  model: CategoryAddRequest;
+
+  constructor(){
+    this.model={
+      name:'',
+      urlHandle:''
+    };
+  }
+
+  onFormSubmit(){
+    console.log(this.model);
+  }
 }
