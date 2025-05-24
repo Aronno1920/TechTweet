@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using TechTweetAPI.Data;
+﻿using TechTweetAPI.Data;
 using TechTweetAPI.Models.Domain;
 using TechTweetAPI.Models.DTO.Category;
 using TechTweetAPI.Repositories.Interfaces;
