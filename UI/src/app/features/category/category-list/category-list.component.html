@@ -7,7 +7,34 @@
         </div>
     </div>
 
-    <ng-container *ngIf="categories">
+    <ng-container *ngIf="categories && categories.length > 0; else noData">
+        <table class="table table-bordered mt-3">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Category Name</th>
+                    <th>Url Handler</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let category of categories">
+                    <td>{{category.id}}</td>
+                    <td>{{category.name}}</td>
+                    <td>{{category.urlHandle}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </ng-container>
+
+    <ng-template #noData>
+        <div class="alert alert-warning mt-3">
+            No categories found.
+        </div>
+    </ng-template>
+
+
+
+    <!-- <ng-container *ngIf="categories">
         <table class="table table-bordered mt-3">
             <thead>
             <tr>
@@ -24,5 +51,5 @@
                 </tr>
             </tbody>
         </table>
-    </ng-container>
+    </ng-container> -->
 </div>
