@@ -9,11 +9,6 @@
         public string ImageUrl { get; set; } = String.Empty;
         public string UrlHandle { get; set; } = String.Empty;
         public Boolean IsPublished { get; set; } = false;
-
-        public string CreatedBy { get; set; }
         public DateTime? CreatedDate { get; set; }
-
-        public string UpdatedBy { get; set; } = null;
-        public DateTime? UpdatedDate { get; set; }
     }
 }

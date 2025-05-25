@@ -1,4 +1,5 @@
-﻿using TechTweetAPI.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using TechTweetAPI.Data;
 using TechTweetAPI.Models.Domain;
 using TechTweetAPI.Models.DTO.Category;
 using TechTweetAPI.Repositories.Interfaces;
@@ -20,6 +21,16 @@ namespace TechTweetAPI.Repositories.Implementations
             await _dbContext.SaveChangesAsync();
 
             return category;
+        }
+
+        public async Task<IEnumerable<Category>> GetAllAsync()
+        {
+            return await _dbContext.Categories.ToListAsync();
+        }
+
+        public async Task<Category> CheckByName(string category_name)
+        {
+            return await _dbContext.Categories.FirstOrDefaultAsync(c => c.Name == category_name);
         }
     }
 }
