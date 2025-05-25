@@ -12,6 +12,7 @@ namespace TechTweetAPI.Controllers
     {
         private readonly IMapper _mapper;
         private readonly ICategoryRepository _categoryRepository;
+
         public CategoriesController(ICategoryRepository categoryRepository, IMapper mapper)
         {
             _categoryRepository = categoryRepository;
