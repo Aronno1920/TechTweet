@@ -3,7 +3,6 @@ import { Router, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms'
 import { CategoryAddRequest } from '../models/category-add-request.model';
 import { CategoryService } from '../services/category.service';
-import { response } from 'express';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -30,7 +29,6 @@ export class CategoryAddComponent implements OnDestroy {
     this.CategoryAddSubcription = this.categoryService.addCategory(this.model).subscribe({
       next:(response) =>{
         this.router.navigateByUrl('/admin/categories');
-
       },
       error:(response)=>{
       }

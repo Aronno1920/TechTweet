@@ -11,5 +11,7 @@ namespace TechTweetAPI.Repositories.Interfaces
         Task<IEnumerable<Category>> GetAllAsync();
 
         Task<Category> CheckByName(string category_name);
+
+        Task<Category?> GetByIdAsync(Guid id);
     }
 }

@@ -22,7 +22,7 @@ namespace TechTweetAPI.Controllers
 
         [HttpPost]
         [ActionName("Create")]
-        public async Task<IActionResult> CreateCategory(CreateCategoryDto createDto)
+        public async Task<IActionResult> CreateCategory([FromBody] CreateCategoryDto createDto)
         {
             if (IsExistCategory(createDto.Name).Result)
             {
@@ -51,6 +51,20 @@ namespace TechTweetAPI.Controllers
 
             return Ok(categoryDtos);
         }
+
+        [HttpGet("{id:Guid}")]
+        [ActionName("GetById")]
+        public async Task<IActionResult> GetCategoryById([FromRoute] Guid id)
+        {
+            var category = await _categoryRepository.GetByIdAsync(id);
+            if (category == null)
+            {
+                return NotFound();
+            }
+            var categoryDto = _mapper.Map<CategoryDto>(category);
+            return Ok(categoryDto);
+        }
+
 
         private async Task<Boolean> IsExistCategory(string category_name)
         {

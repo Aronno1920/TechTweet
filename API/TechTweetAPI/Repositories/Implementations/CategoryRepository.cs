@@ -32,5 +32,10 @@ namespace TechTweetAPI.Repositories.Implementations
         {
             return await _dbContext.Categories.FirstOrDefaultAsync(c => c.Name == category_name);
         }
+
+        public async Task<Category?> GetByIdAsync(Guid id)
+        {
+            return await _dbContext.Categories.FirstOrDefaultAsync(c => c.Id == id);
+        }
     }
 }
