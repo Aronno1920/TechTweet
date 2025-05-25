@@ -1,1 +1,3 @@
-export const environment = {};
+export const environment = {
+    apiBaseUrl:'http://localhost:5187'
+};
