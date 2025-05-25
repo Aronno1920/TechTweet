@@ -3,7 +3,7 @@ import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { CategoryService } from '../services/category.service';
 import { Category } from '../models/category.model';
-
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-category-list',
@@ -14,18 +14,12 @@ import { Category } from '../models/category.model';
 })
 
 export class CategoryListComponent implements OnInit{
-  
-  categories: Category[] = [];
+  categories$?: Observable<Category[]>;
 
   constructor(private _cService:CategoryService){
   }
 
   ngOnInit(): void {
-    this._cService.getAllCategories()
-    .subscribe({
-      next:(response) =>{
-        this.categories = response;
-      }
-    });
+    this.categories$ = this._cService.getAllCategories();
   }
 }
