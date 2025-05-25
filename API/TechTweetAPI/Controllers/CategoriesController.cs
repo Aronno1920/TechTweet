@@ -30,12 +30,12 @@ namespace TechTweetAPI.Controllers
             }
             else
             {
+                createDto.UrlHandle = createDto.UrlHandle.Replace(' ', '-').ToLower();
                 var _category = _mapper.Map<Category>(createDto);
 
                 var saveCategory = await _categoryRepository.CreateAsync(_category);
-
+                
                 var newCategory = _mapper.Map<CategoryDto>(saveCategory);
-
                 return Ok(newCategory);
             }
         }
