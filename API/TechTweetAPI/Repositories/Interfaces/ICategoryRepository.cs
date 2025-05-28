@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using TechTweetAPI.Models.Domain;
-using TechTweetAPI.Models.DTO.Category;
+﻿using TechTweetAPI.Models.Domain;
 
 namespace TechTweetAPI.Repositories.Interfaces
 {
@@ -13,5 +11,7 @@ namespace TechTweetAPI.Repositories.Interfaces
         Task<Category> CheckByName(string category_name);
 
         Task<Category?> GetByIdAsync(Guid id);
+
+        Task<Category?> UpdateAsync(Category category);
     }
 }

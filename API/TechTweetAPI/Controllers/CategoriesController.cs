@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using TechTweetAPI.Models.Domain;
 using TechTweetAPI.Models.DTO.Category;
@@ -66,10 +67,31 @@ namespace TechTweetAPI.Controllers
         }
 
 
+        [HttpPut("{id:Guid}")]
+        [ActionName("Update")]
+        public async Task<IActionResult> EditCategory([FromRoute] Guid id, UpdateCategoryDto request)
+        {
+            var _category = new Category
+            {
+                Id = id,
+                Name = request.Name,
+                UrlHandle = request.UrlHandle.Replace(' ', '-').ToLower(),
+                IsActive = request.IsActive
+            };
+
+            var updatedCategory = await _categoryRepository.UpdateAsync(_category);
+
+            return Ok(updatedCategory);
+        }
+
+
+
+        #region Check Validation Related
         private async Task<Boolean> IsExistCategory(string category_name)
         {
             var category = await _categoryRepository.CheckByName(category_name);
             return category != null;
         }
+        #endregion
     }
 }

@@ -37,5 +37,18 @@ namespace TechTweetAPI.Repositories.Implementations
         {
             return await _dbContext.Categories.FirstOrDefaultAsync(c => c.Id == id);
         }
+
+        public async Task<Category?> UpdateAsync(Category category)
+        {
+            var existingCategory = await _dbContext.Categories.FirstOrDefaultAsync(c => c.Id == category.Id);
+            if (existingCategory != null)
+            {
+                _dbContext.Entry(existingCategory).CurrentValues.SetValues(category);
+                _dbContext.SaveChangesAsync();
+
+                return category;
+
+            }
+        }
     }
 }
