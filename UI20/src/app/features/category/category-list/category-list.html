@@ -1,0 +1,41 @@
+<div class="container">
+  <div class="row mt-3">
+    <div class="col-sm-6">
+      <h3>Category - List</h3>
+    </div>
+    <div class="col-sm-6">
+      <a class="btn btn-md btn-primary" [routerLink]="['/admin/categories/add']">Add Category</a>
+    </div>
+  </div>
+
+  @if (categories$ | async; as categories) {
+    @if (categories.length > 0) {
+      <table class="table table-bordered mt-3">
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Category Name</th>
+            <th>Url Handler</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (category of categories; track category.id) {
+            <tr>
+              <td>{{ category.id }}</td>
+              <td>{{ category.name }}</td>
+              <td>{{ category.urlHandle }}</td>
+              <td>
+                <a class="btn btn-sm btn-light" [routerLink]="['/admin/categories', category.id]">Edit</a>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    } @else {
+      <div class="alert alert-warning mt-3">No categories found.</div>
+    }
+  } @else {
+    <div class="alert alert-info mt-3">Loading...</div>
+  }
+</div>
