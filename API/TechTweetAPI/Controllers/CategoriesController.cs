@@ -81,6 +81,12 @@ namespace TechTweetAPI.Controllers
 
             var updatedCategory = await _categoryRepository.UpdateAsync(_category);
 
+            if (updatedCategory == null)
+            {
+                return NotFound();
+            }
+            var categoryDto = _mapper.Map<CategoryDto>(updatedCategory);
+
             return Ok(updatedCategory);
         }
 

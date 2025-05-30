@@ -44,11 +44,12 @@ namespace TechTweetAPI.Repositories.Implementations
             if (existingCategory != null)
             {
                 _dbContext.Entry(existingCategory).CurrentValues.SetValues(category);
-                _dbContext.SaveChangesAsync();
+                await _dbContext.SaveChangesAsync();
 
                 return category;
-
             }
+
+            return null;
         }
     }
 }

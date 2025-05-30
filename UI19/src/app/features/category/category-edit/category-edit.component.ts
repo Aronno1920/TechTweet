@@ -5,6 +5,8 @@ import { Subscription } from 'rxjs';
 import { CategoryService } from '../services/category.service';
 import { Category } from '../models/category.model';
 import { FormsModule } from '@angular/forms';
+import { CategoryUpdateRequest } from '../models/category-update-request';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -20,9 +22,12 @@ export class CategoryEditComponent implements OnInit, OnDestroy {
   paramsSubscription ?: Subscription;
   category?: Category;
   
-  constructor(private route:ActivatedRoute, private cService:CategoryService){
+  constructor(
+    private route: ActivatedRoute, 
+    private cService: CategoryService, 
+    private router: Router){
+    }
 
-  }
 
   ngOnInit(): void {
     this.paramsSubscription= this.route.paramMap.subscribe({
@@ -42,8 +47,19 @@ export class CategoryEditComponent implements OnInit, OnDestroy {
   }
 
   OnFormSubmit():void{
-    console.log(this.category);
+    const categoryUpdate:CategoryUpdateRequest = {
+      name:this.category?.name?? '',
+      urlHandle:this.category?.urlHandle ?? ''
+    };
 
+    if(this.id){
+      this.cService.updateCategory(this.id, categoryUpdate).subscribe(
+        {
+          next: (response) =>{
+            this.router.navigateByUrl('');
+          }
+        });
+    }
   }
 
     ngOnDestroy(): void {
