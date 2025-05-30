@@ -18,14 +18,13 @@ export class CategoryService {
   }
 
   getAllCategories(): Observable<Category[]>{
-    var url = `${environment.apiBaseUrl}/api/Categories/GetAll`;
-    console.log(url);
-  
-
     return this.http.get<Category[]>(`${environment.apiBaseUrl}/api/Categories/GetAll`);
   }
   
   getCategoryById(id:string): Observable<Category>{
+    var url = `${environment.apiBaseUrl}/api/Categories/GetAll`;
+    console.log(url);
+  
     return this.http.get<Category>(`${environment.apiBaseUrl}/api/Categories/GetById/${id}`);
   }
 

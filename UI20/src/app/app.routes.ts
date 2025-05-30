@@ -10,7 +10,6 @@ export const routes: Routes = [
      {path:'admin/categories', component:CategoryList},
      {path:'admin/categories/add', component:CategoryAdd},
      {path:'admin/categories/:id', component:CategoryEdit}
-
 ];
 
 export class AppRoutingModule{}
