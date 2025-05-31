@@ -34,6 +34,8 @@ export class CategoryEdit implements OnInit, OnDestroy {
         if (this.id) {
           this.cService.getCategoryById(this.id).subscribe({
             next: (response) => {
+              console.log(response);
+
               this.category = response;
             }
           });

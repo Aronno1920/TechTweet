@@ -1,7 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-using TechTweetAPI.Data;
+﻿using TechTweetAPI.Data;
 using TechTweetAPI.Models.Domain;
-using TechTweetAPI.Models.DTO.Category;
+using Microsoft.EntityFrameworkCore;
 using TechTweetAPI.Repositories.Interfaces;
 
 namespace TechTweetAPI.Repositories.Implementations
@@ -15,41 +14,82 @@ namespace TechTweetAPI.Repositories.Implementations
             _dbContext = dbContext;
         }
 
+        #region Validation Related
         public async Task<Category> CreateAsync(Category category)
         {
-            await _dbContext.Categories.AddAsync(category);
-            await _dbContext.SaveChangesAsync();
-
-            return category;
-        }
-
-        public async Task<IEnumerable<Category>> GetAllAsync()
-        {
-            return await _dbContext.Categories.ToListAsync();
-        }
-
-        public async Task<Category> CheckByName(string category_name)
-        {
-            return await _dbContext.Categories.FirstOrDefaultAsync(c => c.Name == category_name);
-        }
-
-        public async Task<Category?> GetByIdAsync(Guid id)
-        {
-            return await _dbContext.Categories.FirstOrDefaultAsync(c => c.Id == id);
-        }
-
-        public async Task<Category?> UpdateAsync(Category category)
-        {
-            var existingCategory = await _dbContext.Categories.FirstOrDefaultAsync(c => c.Id == category.Id);
-            if (existingCategory != null)
+            try
             {
-                _dbContext.Entry(existingCategory).CurrentValues.SetValues(category);
+                await _dbContext.Categories.AddAsync(category);
                 await _dbContext.SaveChangesAsync();
 
                 return category;
             }
+            catch (Exception ex)
+            {
+                throw new Exception("An error occurred while creating the category.", ex);
+            }
+        }
 
+        public async Task<IEnumerable<Category>> GetAllAsync()
+        {
+            try
+            {
+                return await _dbContext.Categories
+                .OrderByDescending(o => o.IsActive)
+                .ThenBy(o => o.Name)
+                .ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("An error occurred while retrieving categories.", ex);
+            }
+        }
+
+        public async Task<Category?> GetByIdAsync(Guid id)
+        {
+            try
+            {
+                return await _dbContext.Categories.FirstOrDefaultAsync(c => c.Id == id);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("An error occurred while validating the category ID.", ex);
+            }
+        }
+
+        public async Task<Category?> UpdateAsync(Category category)
+        {
+            try
+            {
+                var existingCategory = await _dbContext.Categories.FirstOrDefaultAsync(c => c.Id == category.Id);
+                if (existingCategory != null)
+                {
+                    _dbContext.Entry(existingCategory).CurrentValues.SetValues(category);
+                    await _dbContext.SaveChangesAsync();
+
+                    return category;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("An error occurred while updating the category.", ex);
+            }
             return null;
         }
+        #endregion
+
+        #region Check Validation Related
+        public async Task<Category> CheckByName(string category_name)
+        {
+            try
+            {
+                return await _dbContext.Categories.FirstOrDefaultAsync(c => c.Name == category_name);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("An error occurred while checking the category by name.", ex);
+            }
+        }
+        #endregion
     }
 }

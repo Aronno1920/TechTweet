@@ -16,6 +16,8 @@
             <th>Id</th>
             <th>Category Name</th>
             <th>Url Handler</th>
+            <th>Is Active?</th>
+            <th>Date</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -25,6 +27,10 @@
               <td>{{ category.id }}</td>
               <td>{{ category.name }}</td>
               <td>{{ category.urlHandle }}</td>
+              <td>
+                  <input type="checkbox" disabled id="isActive" name="isActive" [checked]="!!category?.id" />
+              </td>
+              <td>{{ category.createdDate }}</td>
               <td>
                 <a class="btn btn-sm btn-light" [routerLink]="['/admin/categories', category.id]">Edit</a>
               </td>

@@ -20,9 +20,8 @@ export class CategoryList implements OnInit{
   }
 
   ngOnInit(): void {
-
-    console.log('ngOnInit(): void');
-
     this.categories$ = this._cService.getAllCategories();
+
+    console.log('-------> ', this.categories$)
   }
 }
