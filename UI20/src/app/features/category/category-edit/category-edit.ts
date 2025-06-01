@@ -13,12 +13,14 @@ import { CategoryService } from '../services/category-service';
   standalone: true,
   imports: [FormsModule, CommonModule, RouterModule],
   templateUrl: './category-edit.html',
-  styleUrls: ['./category-edit.css'] // ✅ use 'styleUrls'
+  styleUrls: ['./category-edit.css']
 })
+
 export class CategoryEdit implements OnInit, OnDestroy {
   id: string | null = null;
   paramsSubscription?: Subscription;
-  category?: Category;
+  category: Category | null = null;
+  isLoading = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -26,20 +28,42 @@ export class CategoryEdit implements OnInit, OnDestroy {
     private router: Router
   ) {}
 
+  
   ngOnInit(): void {
-    this.paramsSubscription = this.route.paramMap.subscribe({
-      next: (params) => {
-        this.id = params.get('id');
+    this.paramsSubscription = this.route.paramMap.subscribe(params => {
+      const newId = params.get('id');
+      if (newId && newId !== this.id) {
+        this.id = newId;
+        this.loadCategory(this.id);
+      }
+    });
+  }
 
-        if (this.id) {
-          this.cService.getCategoryById(this.id).subscribe({
-            next: (response) => {
-              console.log(response);
+//   loadCategory(id: string) {
+//   this.isLoading = true;
+//   this.cService.getCategoryById(id).subscribe({
+//     next: (response) => {
+//       console.log(response);
+//       this.category = response;
+//       this.isLoading = false;
+//     },
+//     error: (err) => {
+//       console.error('Error loading category:', err);
+//       this.isLoading = false;
+//     }
+//   });
+// }
 
-              this.category = response;
-            }
-          });
-        }
+  loadCategory(id: string) {
+    debugger;
+    this.cService.getCategoryById(id).subscribe({
+      next: (response) => {
+        debugger;
+        console.log(response);
+        this.category = response;
+      },
+      error: (err) => {
+        console.error('Error loading category:', err);
       }
     });
   }
@@ -57,6 +81,16 @@ export class CategoryEdit implements OnInit, OnDestroy {
         }
       });
     }
+  }
+
+  OnDelete():void{
+    //     if (this.id) {
+    //       this.cService.deleteCategory(this.id).subscribe({
+    //         next: () => {
+    //           this.router.navigateByUrl('/admin/categories'); // ✅ update path
+    //         }
+    //   });
+    // }
   }
 
   ngOnDestroy(): void {

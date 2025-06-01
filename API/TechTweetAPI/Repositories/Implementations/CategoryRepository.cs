@@ -67,7 +67,7 @@ namespace TechTweetAPI.Repositories.Implementations
                     _dbContext.Entry(existingCategory).CurrentValues.SetValues(category);
                     await _dbContext.SaveChangesAsync();
 
-                    return category;
+                    return existingCategory;
                 }
             }
             catch (Exception ex)
@@ -76,6 +76,46 @@ namespace TechTweetAPI.Repositories.Implementations
             }
             return null;
         }
+
+        public async Task<Category?> InactiveAsync(Category category)
+        {
+            try
+            {
+                var inactive_category = await _dbContext.Categories.FirstOrDefaultAsync(c => c.Id == category.Id);
+                if (inactive_category != null)
+                {
+                    inactive_category.IsActive = false; // Soft delete
+                    _dbContext.Entry(inactive_category).State = EntityState.Modified;
+                    await _dbContext.SaveChangesAsync();
+                    return inactive_category;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("An error occurred while deleting the category.", ex);
+            }
+            return null;
+        }
+
+        public async Task<Boolean> DeleteAsync(Category category)
+        {
+            try
+            {
+                var deletedCategory = await _dbContext.Categories.FirstOrDefaultAsync(c => c.Id == category.Id);
+                if (deletedCategory != null)
+                {
+                    _dbContext.Categories.Remove(deletedCategory);
+                    await _dbContext.SaveChangesAsync();
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("An error occurred while deleting the category.", ex);
+            }
+            return false;
+        }
+
         #endregion
 
         #region Check Validation Related

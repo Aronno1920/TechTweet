@@ -66,7 +66,6 @@ namespace TechTweetAPI.Controllers
             return Ok(categoryDto);
         }
 
-
         [HttpPut("{id:Guid}")]
         [ActionName("Update")]
         public async Task<IActionResult> EditCategory([FromRoute] Guid id, UpdateCategoryDto request)
@@ -89,6 +88,45 @@ namespace TechTweetAPI.Controllers
 
             return Ok(updatedCategory);
         }
+
+        [HttpDelete("{id:Guid}")]
+        [ActionName("Inactive")]
+        public async Task<IActionResult> InactiveCategory([FromRoute] Guid id)
+        {
+            var category = await _categoryRepository.GetByIdAsync(id);
+            if (category == null)
+            {
+                return NotFound();
+            }
+            category.IsActive = false; // Soft delete
+            var updatedCategory = await _categoryRepository.InactiveAsync(category);
+            if (updatedCategory == null)
+            {
+                return NotFound();
+            }
+            return Ok("Category inactivated successfully.");
+        }
+
+        [HttpDelete("{id:Guid}")]
+        [ActionName("Delete")]
+        public async Task<IActionResult> DeleteCatetory([FromRoute] Guid id)
+        {
+            var deletedCategory = await _categoryRepository.GetByIdAsync(id);
+            if (deletedCategory == null)
+            {
+                return NotFound();
+            }
+
+            var isDelete = await _categoryRepository.DeleteAsync(deletedCategory);
+            if (isDelete == null)
+            {
+                return NotFound();
+            }
+
+
+            return Ok("Category deleted successfully.");
+        }
+
 
 
 

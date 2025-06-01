@@ -22,13 +22,15 @@ export class CategoryService {
   }
   
   getCategoryById(id:string): Observable<Category>{
-    var url = `${environment.apiBaseUrl}/api/Categories/GetAll`;
-    console.log(url);
-  
     return this.http.get<Category>(`${environment.apiBaseUrl}/api/Categories/GetById/${id}`);
   }
 
   updateCategory(id:string, updateModel:CategoryUpdateRequest): Observable<Category>{
+    debugger;
     return this.http.put<Category>(`${environment.apiBaseUrl}/api/Categories/Update/${id}`, updateModel);
+  }
+
+  deleteCategory(id:string): Observable<Boolean>{
+    return this.http.delete<Boolean>(`${environment.apiBaseUrl}/api/Categories/Delete/${id}`);
   }
 }

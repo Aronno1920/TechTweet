@@ -21,14 +21,14 @@ builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 
 /*--------BUILD SERVICES--------*/
 var app = builder.Build();
-if (app.Environment.IsDevelopment())
-{
+//if (app.Environment.IsDevelopment())
+//{
     app.MapOpenApi();
     app.UseSwaggerUI(options =>
     {
         options.SwaggerEndpoint("/openapi/v1.json", "TechTweetAPI v1");
     });
-}
+//}
 
 /*--------RUN APPLICATION--------*/
 app.UseHttpsRedirection();

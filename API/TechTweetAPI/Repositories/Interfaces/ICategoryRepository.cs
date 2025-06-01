@@ -13,5 +13,9 @@ namespace TechTweetAPI.Repositories.Interfaces
         Task<Category?> GetByIdAsync(Guid id);
 
         Task<Category?> UpdateAsync(Category category);
+
+        Task<Category?> InactiveAsync(Category category);
+
+        Task<Boolean> DeleteAsync(Category category);
     }
 }

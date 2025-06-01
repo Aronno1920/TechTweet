@@ -3,7 +3,7 @@
     <div class="col-sm-6">
       <h3>Category - List</h3>
     </div>
-    <div class="col-sm-6">
+    <div class="col-sm-6 text-end">
       <a class="btn btn-md btn-primary" [routerLink]="['/admin/categories/add']">Add Category</a>
     </div>
   </div>
@@ -32,7 +32,8 @@
               </td>
               <td>{{ category.createdDate }}</td>
               <td>
-                <a class="btn btn-sm btn-light" [routerLink]="['/admin/categories', category.id]">Edit</a>
+                <a class="btn btn-sm btn-primary" [routerLink]="['/admin/categories', category.id]">Edit</a>
+                <button type="button" class="btn btn-sm btn-warning ms-2">Inactive</button>
               </td>
             </tr>
           }
