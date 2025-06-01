@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 
 import { Category } from '../models/category.model';
 import { CategoryUpdateRequest } from '../models/category-update-request';
@@ -19,9 +19,9 @@ import { CategoryService } from '../services/category-service';
 export class CategoryEdit implements OnInit, OnDestroy {
   id: string | null = null;
   paramsSubscription?: Subscription;
-  category: Category | null = null;
-  isLoading = false;
-
+  category$?: Observable<Category>;
+  category?:Category;
+  
   constructor(
     private route: ActivatedRoute,
     private cService: CategoryService,
@@ -39,34 +39,10 @@ export class CategoryEdit implements OnInit, OnDestroy {
     });
   }
 
-//   loadCategory(id: string) {
-//   this.isLoading = true;
-//   this.cService.getCategoryById(id).subscribe({
-//     next: (response) => {
-//       console.log(response);
-//       this.category = response;
-//       this.isLoading = false;
-//     },
-//     error: (err) => {
-//       console.error('Error loading category:', err);
-//       this.isLoading = false;
-//     }
-//   });
-// }
-
   loadCategory(id: string) {
-    debugger;
-    this.cService.getCategoryById(id).subscribe({
-      next: (response) => {
-        debugger;
-        console.log(response);
-        this.category = response;
-      },
-      error: (err) => {
-        console.error('Error loading category:', err);
-      }
-    });
+    this.category$ =  this.cService.getCategoryById(id);
   }
+
 
   OnFormSubmit(): void {
     const categoryUpdate: CategoryUpdateRequest = {
@@ -75,9 +51,14 @@ export class CategoryEdit implements OnInit, OnDestroy {
     };
 
     if (this.id) {
+
+      console.log('-------> ',this.id);
+      console.log('------->', categoryUpdate);
+
+
       this.cService.updateCategory(this.id, categoryUpdate).subscribe({
         next: () => {
-          this.router.navigateByUrl('/admin/categories'); // ✅ update path
+          this.router.navigateByUrl('/admin/categories');
         }
       });
     }
