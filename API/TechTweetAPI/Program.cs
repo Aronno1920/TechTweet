@@ -1,4 +1,4 @@
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using TechTweetAPI.Data;
 using TechTweetAPI.Repositories.Implementations;
 using TechTweetAPI.Repositories.Interfaces;
@@ -18,6 +18,16 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 
+/*--------SETUP CORS--------*/
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+    });
+});
 
 /*--------BUILD SERVICES--------*/
 var app = builder.Build();
@@ -32,13 +42,7 @@ var app = builder.Build();
 
 /*--------RUN APPLICATION--------*/
 app.UseHttpsRedirection();
-
-app.UseCors(options =>
-{
-    options.AllowAnyOrigin()
-           .AllowAnyMethod()
-           .AllowAnyHeader();
-});
+app.UseCors("AllowAll");
 
 app.UseAuthorization();
 app.MapControllers();
