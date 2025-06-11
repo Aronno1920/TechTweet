@@ -89,7 +89,7 @@ namespace TechTweetAPI.Controllers
             return Ok(updatedCategory);
         }
 
-        [HttpDelete("{id:Guid}")]
+        [HttpPut("{id:Guid}")]
         [ActionName("Inactive")]
         public async Task<IActionResult> InactiveCategory([FromRoute] Guid id)
         {
