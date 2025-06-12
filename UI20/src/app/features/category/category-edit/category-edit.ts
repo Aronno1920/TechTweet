@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { Subscription, Observable } from 'rxjs';
 
 import { Category } from '../models/category.model';
-import { CategoryUpdateRequest } from '../models/category-update-request';
+import { CategoryUpdateRequest } from '../models/category-update-request.model';
 import { CategoryService } from '../services/category-service';
 
 @Component({
@@ -43,7 +43,6 @@ export class CategoryEdit implements OnInit, OnDestroy {
     this.category$ =  this.cService.getCategoryById(id);
   }
 
-
   OnFormSubmit(): void {
     const categoryUpdate: CategoryUpdateRequest = {
       name: this.category?.name ?? '',
@@ -64,14 +63,14 @@ export class CategoryEdit implements OnInit, OnDestroy {
     }
   }
 
-  OnDelete():void{
-    //     if (this.id) {
-    //       this.cService.deleteCategory(this.id).subscribe({
-    //         next: () => {
-    //           this.router.navigateByUrl('/admin/categories'); // ✅ update path
-    //         }
-    //   });
-    // }
+  OnDelete(): void{
+        if (this.id) {
+          this.cService.deleteCategory(this.id).subscribe({
+            next: () => {
+              this.router.navigateByUrl('/admin/categories');
+            }
+      });
+    }
   }
 
   ngOnDestroy(): void {

@@ -7,8 +7,9 @@ using TechTweetAPI.Repositories.Interfaces;
 
 namespace TechTweetAPI.Controllers
 {
-    [Route("api/[controller]/[action]")]
     [ApiController]
+    [Route("api/[controller]/[action]")]
+
     public class CategoriesController : ControllerBase
     {
         private readonly IMapper _mapper;
@@ -46,9 +47,7 @@ namespace TechTweetAPI.Controllers
         public async Task<IActionResult> GetAllCategories()
         {
             var categories = await _categoryRepository.GetAllAsync();
-
             var categoryDtos = _mapper.Map<List<CategoryDto>>(categories);
-
 
             return Ok(categoryDtos);
         }
@@ -79,7 +78,6 @@ namespace TechTweetAPI.Controllers
             };
 
             var updatedCategory = await _categoryRepository.UpdateAsync(_category);
-
             if (updatedCategory == null)
             {
                 return NotFound();
@@ -96,15 +94,14 @@ namespace TechTweetAPI.Controllers
             var category = await _categoryRepository.GetByIdAsync(id);
             if (category == null)
             {
-                return NotFound();
+                return NotFound(false);
             }
-            category.IsActive = false; // Soft delete
+            category.IsActive = false;
+
             var updatedCategory = await _categoryRepository.InactiveAsync(category);
-            if (updatedCategory == null)
-            {
-                return NotFound();
-            }
-            return Ok("Category inactivated successfully.");
+            var isSuccess = updatedCategory != null;
+
+            return Ok(isSuccess);
         }
 
         [HttpDelete("{id:Guid}")]
@@ -117,17 +114,14 @@ namespace TechTweetAPI.Controllers
                 return NotFound();
             }
 
-            var isDelete = await _categoryRepository.DeleteAsync(deletedCategory);
-            if (isDelete == null)
+            var isDeleted = await _categoryRepository.DeleteAsync(deletedCategory);
+            if (!isDeleted)
             {
-                return NotFound();
+                return StatusCode(500, "Error deleting category.");
             }
 
-
-            return Ok("Category deleted successfully.");
+            return Ok(isDeleted);
         }
-
-
 
 
         #region Check Validation Related
