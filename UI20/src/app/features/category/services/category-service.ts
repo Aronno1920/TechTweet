@@ -2,9 +2,11 @@ import { Injectable } from '@angular/core';
 import { CategoryAddRequest } from '../models/category-add-request.model';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { Category } from '../models/category.model';
+
 import { environment } from '../../../../../src/environments/environment';
+import { Category } from '../models/category.model';
 import { CategoryUpdateRequest } from '../models/category-update-request.model';
+
 
 @Injectable({
   providedIn: 'root'
@@ -33,6 +35,7 @@ export class CategoryService {
    * Soft-deletes (inactivates) the category
    * Fix: Add empty object {} as body to satisfy HttpClient.put() signature 
    **/
+  
   inactiveCategory(id: string): Observable<boolean> {
     return this.http.put<boolean>(`${environment.apiBaseUrl}/api/Categories/Inactive/${id}`, {});
   }
