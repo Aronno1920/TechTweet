@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using TechTweetAPI.Models.Domain;
-using TechTweetAPI.Models.DTO.Category;
+using TechTweetAPI.Models.DTO;
 
 namespace TechTweetAPI.Models.Config
 {
@@ -8,9 +8,13 @@ namespace TechTweetAPI.Models.Config
     {
         public MappingProfile()
         {
-            CreateMap<Category, CreateCategoryDto>().ReverseMap();
             CreateMap<Category, CategoryDto>().ReverseMap();
-            CreateMap<Category, UpdateCategoryDto>().ReverseMap();
+            CreateMap<Category, CategoryCreateDto>().ReverseMap();
+            CreateMap<Category, CategoryUpdateDto>().ReverseMap();
+
+            CreateMap<Post, PostDto>().ReverseMap();
+            CreateMap<Post, PostCreateDto>().ReverseMap();
+            CreateMap<Post, PostUpdateDto>().ReverseMap();
         }
     }
 }

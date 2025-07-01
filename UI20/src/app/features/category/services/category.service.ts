@@ -3,7 +3,7 @@ import { CategoryAddRequest } from '../models/category-add-request.model';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
-import { environment } from '../../../../../src/environments/environment';
+import { environment } from '../../../../environments/environment';
 import { Category } from '../models/category.model';
 import { CategoryUpdateRequest } from '../models/category-update-request.model';
 
@@ -11,6 +11,7 @@ import { CategoryUpdateRequest } from '../models/category-update-request.model';
 @Injectable({
   providedIn: 'root'
 })
+
 export class CategoryService {
 
   constructor(private http: HttpClient) { }

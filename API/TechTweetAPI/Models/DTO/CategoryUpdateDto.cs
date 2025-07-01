@@ -1,10 +1,9 @@
-﻿namespace TechTweetAPI.Models.DTO.Category
+﻿namespace TechTweetAPI.Models.DTO
 {
-    public class CreateCategoryDto
+    public class CategoryUpdateDto
     {
         public string Name { get; set; } = string.Empty;
         public string UrlHandle { get; set; } = string.Empty;
         public bool IsActive { get; set; } = true;
-        public DateTime CreatedDate { get; set; } = DateTime.Now;
     }
 }

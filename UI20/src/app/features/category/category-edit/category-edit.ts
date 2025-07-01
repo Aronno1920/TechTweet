@@ -6,7 +6,7 @@ import { Subscription, Observable } from 'rxjs';
 
 import { Category } from '../models/category.model';
 import { CategoryUpdateRequest } from '../models/category-update-request.model';
-import { CategoryService } from '../services/category-service';
+import { CategoryService } from '../services/category.service';
 
 @Component({
   selector: 'app-category-edit',

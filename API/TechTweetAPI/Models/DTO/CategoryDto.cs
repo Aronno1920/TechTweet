@@ -1,4 +1,4 @@
-﻿namespace TechTweetAPI.Models.DTO.Category
+﻿namespace TechTweetAPI.Models.DTO
 {
     public class CategoryDto
     {

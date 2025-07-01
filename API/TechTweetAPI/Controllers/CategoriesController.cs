@@ -1,8 +1,7 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using TechTweetAPI.Models.Domain;
-using TechTweetAPI.Models.DTO.Category;
+using TechTweetAPI.Models.DTO;
 using TechTweetAPI.Repositories.Interfaces;
 
 
@@ -25,7 +24,7 @@ namespace TechTweetAPI.Controllers
 
         [HttpPost]
         [ActionName("Create")]
-        public async Task<IActionResult> CreateCategory([FromBody] CreateCategoryDto createDto)
+        public async Task<IActionResult> CreateCategory([FromBody] CategoryCreateDto createDto)
         {
             if (IsExistCategory(createDto.Name).Result)
             {
@@ -68,7 +67,7 @@ namespace TechTweetAPI.Controllers
 
         [HttpPut("{id:Guid}")]
         [ActionName("Update")]
-        public async Task<IActionResult> EditCategory([FromRoute] Guid id, UpdateCategoryDto request)
+        public async Task<IActionResult> EditCategory([FromRoute] Guid id, CategoryUpdateDto request)
         {
             var _category = new Category
             {

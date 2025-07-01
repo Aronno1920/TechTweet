@@ -1,3 +1,54 @@
-<p>
-  post-add works!
-</p>
+<div class="container">
+  <h1 class="mt-3">Add New Post</h1>
+
+  <form #form="ngForm" (ngSubmit)="ngFormSubmit()">
+    <div class="mt-2 mb-5">
+
+      <div class="mt-3">
+        <label for="title" class="form-label">Title</label>
+        <input type="text" id="title" name="title" [(ngModel)]="model.title" class="form-control">
+      </div>
+
+      <div class="mt-3">
+        <label for="urlHandle" class="form-label">Url Handle</label>
+        <input type="text" id="urlHandle" name="urlHandle" [(ngModel)]="model.urlHandle" class="form-control">
+      </div>
+
+      <div class="mt-3">
+        <label for="shortDescription" class="form-label">Short Description</label>
+        <input type="text" id="shortDescription" name="shortDescription" [(ngModel)]="model.shortDescription" class="form-control">
+      </div>
+
+      <div class="mt-3">
+        <label for="content" class="form-label">Content</label>
+        <textarea id="content" name="content" [(ngModel)]="model.content" class="form-control"></textarea>
+      </div>
+
+      <div class="mt-3">
+        <label for="featureImageUrl" class="form-label">Feature Image</label>
+        <input type="text" id="featureImageUrl" name="featureImageUrl" [(ngModel)]="model.imageUrl" class="form-control">
+      </div>
+
+      <div class="mt-3">
+        <label for="publishDate" class="form-label">Publish Date</label>
+        <input type="Date" id="publishDate" name="publishDate" [(ngModel)]="model.createdDate" class="form-control">
+      </div>
+
+      <div class="mt-3">
+        <label for="author" class="form-label">Author</label>
+        <input type="text" id="author" name="author" [(ngModel)]="model.author" class="form-control">
+      </div>
+
+      <div class="form-check mt-3">
+        <input type="checkbox" id="isVisible" name="isVisible" [(ngModel)]="model.isPublished" class="form-check-input">
+        <label for="isVisible" class="form-check-label">Is Visible?</label>
+      </div>
+
+      <div class="mt-3">
+        <button type="submit" class="btn btn-primary">Save</button>
+      </div>
+
+    </div>
+  </form>
+
+</div>

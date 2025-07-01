@@ -2,7 +2,7 @@ import { Component, OnDestroy } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms'
 import { CategoryAddRequest } from '../models/category-add-request.model';
-import { CategoryService } from '../services/category-service';
+import { CategoryService } from '../services/category.service';
 import { Subscription } from 'rxjs';
 
 @Component({

@@ -1,10 +1,7 @@
-﻿namespace TechTweetAPI.Models.Domain
+﻿namespace TechTweetAPI.Models.DTO
 {
-    public class Post
+    public class PostCreateDto
     {
-        public Guid Id { get; set; }
-        public Guid CategoryId { get; set; }
-
         public string Title { get; set; }
         public string ShortDesciption { get; set; } = String.Empty;
         public string Content { get; set; }
